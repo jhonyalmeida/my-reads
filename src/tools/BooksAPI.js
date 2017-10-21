@@ -1,6 +1,20 @@
 
 const api = "https://reactnd-books-api.udacity.com"
 
+export const shelves = [
+  {
+      id: 'currentlyReading',
+      label: 'Currently Reading'
+  },
+  {
+      id: 'wantToRead',
+      label: 'Want to Read'
+  },
+  {
+      id: 'read',
+      label: 'Read'
+  }
+]
 
 // Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token
