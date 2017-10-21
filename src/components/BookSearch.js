@@ -18,7 +18,7 @@ class BookSearch extends Component {
 
     onChangeTerm(event) {
         const term = event.target.value
-        if (term.length > 2) {
+        if (term.length > 1) {
             this.search(term)
         }
     }
