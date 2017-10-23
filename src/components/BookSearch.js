@@ -34,12 +34,14 @@ class BookSearch extends Component {
 
     search(term) {
         Books.getAll().then(userBooks => {
-            //const ignoredIds = books.map(book => book.id)
+            //Minha versão inicial, comentada, filtrava os livros de estantes dos resultados da busca
+            //const ignoredIds = userBooks.map(book => book.id)
             Books.search(term, 20).then(
                 response => {
                     const results = !response.error 
                         ? response
                             //.filter(book => !ignoredIds.includes(book.id))
+                            //.map(book => Object.assign({}, book, { shelf: 'none' }))
                             .map(book => Object.assign({}, book, { shelf: 
                                 userBooks
                                     .filter(b => b.id === book.id)
