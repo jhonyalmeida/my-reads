@@ -9,7 +9,8 @@ class BookList extends Component {
         super(props)
         this.changeShelf = this.changeShelf.bind(this)
         this.state = Books.shelves.reduce(
-            (prev, cur) => Object.assign(prev, {[cur.id]: []}), {})
+            (prev, cur) => Object.assign(prev, {[cur.id]: []})
+        , {})
     }
 
     componentDidMount() {
@@ -41,10 +42,11 @@ class BookList extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        {Books.shelves.map(
-                            shelf => <Shelf title={shelf.label} key={shelf.id}
-                                        books={this.state[shelf.id]} 
-                                        onShelfChange={this.changeShelf} />
+                        {Books.shelves.map(shelf => 
+                            <Shelf title={shelf.label} 
+                                   key={shelf.id}
+                                   books={this.state[shelf.id]} 
+                                   onShelfChange={this.changeShelf} />
                         )}
                     </div>
                 </div>

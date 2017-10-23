@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { shelves } from './../tools/BooksAPI'
+import PropTypes from 'prop-types'
 
 const styles = {
     book: (thumbnail) => ({ 
@@ -15,6 +16,11 @@ const styles = {
 }
 
 class Book extends Component {
+
+    static propTypes = {
+        book: PropTypes.object,
+        onShelfChange: PropTypes.func
+    };
 
     state = {
         moving: false
