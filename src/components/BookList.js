@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Shelf from './Shelf'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify';
 import * as Books from './../tools/BooksAPI'
 
 class BookList extends Component {
@@ -29,9 +30,11 @@ class BookList extends Component {
         })
     }
 
-    changeShelf(book, shelf) {
-        Books.update(book, shelf)
-            .then(res => this.loadBooks())
+    changeShelf(book, shelf, callback) {
+        Books.update(book, shelf).then(res => {
+            this.loadBooks()
+            toast.success(`Book ${shelf === 'none' ? 'removed' : 'moved to ' + shelf}`)
+        })
     }
 
     render() {

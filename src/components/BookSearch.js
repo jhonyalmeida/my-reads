@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as Books from './../tools/BooksAPI'
 import Book from './Book'
+import { toast } from 'react-toastify';
 
 class BookSearch extends Component {
 
@@ -18,24 +19,32 @@ class BookSearch extends Component {
 
     onChangeTerm(event) {
         const term = event.target.value
-        if (term.length > 1) {
+        if (term.length > 2) {
             this.search(term)
         }
     }
 
-    onChangeShelf(book, shelf) {
-        Books.update(book, shelf).then(res => this.search(this.state.term))
+    onChangeShelf(book, shelf, callback) {
+        Books.update(book, shelf).then(res => {
+            this.search(this.state.term)
+            callback()
+            toast.success(`Book added to shelf '${shelf}'`)
+        })
     }
 
     search(term) {
-        Books.getAll().then(books => {
-            const ignoredIds = books.map(book => book.id)
+        Books.getAll().then(userBooks => {
+            //const ignoredIds = books.map(book => book.id)
             Books.search(term, 20).then(
                 response => {
                     const results = !response.error 
                         ? response
-                            .filter(book => !ignoredIds.includes(book.id))
-                            .map(book => Object.assign({}, book, {shelf: 'none'}))
+                            //.filter(book => !ignoredIds.includes(book.id))
+                            .map(book => Object.assign({}, book, { shelf: 
+                                userBooks
+                                    .filter(b => b.id === book.id)
+                                    .reduce((acc, b) => b.shelf, 'none')
+                            }))
                         : []
                     this.setState({results, term})
                 }

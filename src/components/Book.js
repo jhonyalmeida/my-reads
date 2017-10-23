@@ -20,19 +20,23 @@ class Book extends Component {
     static propTypes = {
         book: PropTypes.object,
         onShelfChange: PropTypes.func
-    };
+    }
 
     state = {
         moving: false
     }
 
+    componentDidMount() {
+        this.setState({moving: false})
+    }
+
     onChange(event) {
         this.setState({ moving: true })
-        try {
-            this.props.onShelfChange(this.props.book, event.target.value)
-        } catch (error) {
-            this.setState({moving: false})
-        }
+        this.props.onShelfChange(
+            this.props.book, 
+            event.target.value,
+            _ => this.setState({ moving: false })
+        )
     }
 
     renderOptions(book) {
